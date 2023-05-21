@@ -1,11 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using TestProject.Concrete;
 using TestProject.Contracts;
+using TestProject.DAL;
 using TestProject.HttpApi.Core;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 RegisterServices(builder);
-var app = builder.Build();
+WebApplication app = builder.Build();
 ConfigurePipelineSettings(app);
 app.Run();
 
@@ -22,6 +24,11 @@ static void RegisterServices(WebApplicationBuilder builder)
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.AddDbContext<MySqlContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("MssqlTest"));
+    });
 
     builder.Services.AddControllers(options =>
     {
@@ -47,6 +54,10 @@ static void ConfigurePipelineSettings(WebApplication app)
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
     app.UseHttpsRedirection();
 

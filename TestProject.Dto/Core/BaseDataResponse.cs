@@ -8,8 +8,8 @@ namespace TestProject.Dto.Core
 {
     public class BaseDataResponse<T> where T : class
     {
-        public T? Data { get; set; }
-        public string Message { get; set; } = string.Empty;
         public bool IsSuccess { get; set; } = false;
+        public string Message { get; set; } = string.Empty;
+        public T? Data { get; set; }
     }
 }
