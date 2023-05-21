@@ -5,15 +5,17 @@ VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.WebHost", "TestProject.Api\TestProject.WebHost.csproj", "{62F400BC-3C73-4151-A4EF-39080BE80CC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.HttpApi", "TestProject.HttpApi\TestProject.HttpApi.csproj", "{D8ED35C2-5E24-4387-A693-DB9345CC37BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.HttpApi", "TestProject.HttpApi\TestProject.HttpApi.csproj", "{D8ED35C2-5E24-4387-A693-DB9345CC37BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Dto", "TestProject.Dto\TestProject.Dto.csproj", "{C27D7930-4EE5-4074-96D8-89FDCE4BDC82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.Dto", "TestProject.Dto\TestProject.Dto.csproj", "{C27D7930-4EE5-4074-96D8-89FDCE4BDC82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Concrete", "TestProject.Concrete\TestProject.Concrete.csproj", "{9B179A0D-9821-4D6C-8FF0-E50D59392577}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.Concrete", "TestProject.Concrete\TestProject.Concrete.csproj", "{9B179A0D-9821-4D6C-8FF0-E50D59392577}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Contracts", "TestProject.Contracts\TestProject.Contracts.csproj", "{2D17314A-DCD8-4D4B-AFFB-BA92D8AC539B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.Contracts", "TestProject.Contracts\TestProject.Contracts.csproj", "{2D17314A-DCD8-4D4B-AFFB-BA92D8AC539B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Constants", "TestProject.Constants\TestProject.Constants.csproj", "{0CED8ED3-DF5B-42AD-8110-39B760D7B154}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.Constants", "TestProject.Constants\TestProject.Constants.csproj", "{0CED8ED3-DF5B-42AD-8110-39B760D7B154}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.DAL", "TestProject.DAL\TestProject.DAL.csproj", "{DE162743-7B62-42D0-BF5C-0A50AB618082}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0CED8ED3-DF5B-42AD-8110-39B760D7B154}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CED8ED3-DF5B-42AD-8110-39B760D7B154}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CED8ED3-DF5B-42AD-8110-39B760D7B154}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE162743-7B62-42D0-BF5C-0A50AB618082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE162743-7B62-42D0-BF5C-0A50AB618082}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE162743-7B62-42D0-BF5C-0A50AB618082}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE162743-7B62-42D0-BF5C-0A50AB618082}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
