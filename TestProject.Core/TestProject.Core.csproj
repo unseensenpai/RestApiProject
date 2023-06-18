@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestProject.Constants\TestProject.Constants.csproj" />
-    <ProjectReference Include="..\TestProject.Contracts\TestProject.Contracts.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestProject.Dto\TestProject.Dto.csproj" />
   </ItemGroup>
 
 </Project>

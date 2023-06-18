@@ -1,30 +1,38 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using TestProject.Concrete;
-using TestProject.Contracts;
+using System.Net.Http.Headers;
+using TestProject.Core.Middlewares;
 using TestProject.DAL;
+using TestProject.Dto.Auth;
 using TestProject.HttpApi.Core;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+RegisterConfiguations(builder);
 RegisterServices(builder);
 WebApplication app = builder.Build();
 ConfigurePipelineSettings(app);
 app.Run();
+app.Logger.LogInformation("Application started!");
 
 static void RegisterInjectionServices(WebApplicationBuilder builder)
 {
-    builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+    builder.Services.AddServiceModules();
+    builder.Services.AddHttpClient(builder.Configuration.GetSection("Endpoints:Local:Client").Value, options =>
+    {
+        options.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Endpoints:Local:Address"));
+        options.DefaultRequestHeaders.Accept.Clear();
+        options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        options.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", builder.Configuration.GetSection("").Value);
+        options.Timeout = TimeSpan.FromSeconds(30);
+    });
 }
 
-static void RegisterServices(WebApplicationBuilder builder)
-{
-    // Add services to the container.
 
-    builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+static void RegisterServices(WebApplicationBuilder builder)
+{    
+
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-
     builder.Services.AddDbContext<MySqlContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("MssqlTest"));
@@ -60,8 +68,28 @@ static void ConfigurePipelineSettings(WebApplication app)
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
     app.UseHttpsRedirection();
+    app.UseRouting();
 
     app.UseAuthorization();
 
+    app.UseMiddleware<ExceptionMiddleware>();
+
     app.MapControllers();
+
+}
+
+static void RegisterConfiguations(WebApplicationBuilder builder)
+{
+    builder.Configuration.AddJsonFile("appsettings.json", true, true);
+    builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
+    builder.Services.Configure<ServiceConfigs>(builder.Configuration.GetSection("ServiceConfiguration"));
+}
+
+
+AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+
+void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+{
+    app.Logger.LogCritical("an error occured.");
 }
