@@ -41,3 +41,17 @@ SELECT TOP (100)
   RAND(CHECKSUM(NEWID())) * 10000
 FROM master..spt_values;
 ```
+
+**-- For More Lake of Data samples** (10000 Employee)
+```
+INSERT INTO Employee (name, surname, age, startdate, enddate, Identityno, salary)
+SELECT TOP (10000)
+  'John' + RIGHT('0000' + CONVERT(VARCHAR(5), ROW_NUMBER() OVER (ORDER BY @@SPID)), 5),
+  'Doe' + RIGHT('0000' + CONVERT(VARCHAR(5), ROW_NUMBER() OVER (ORDER BY @@SPID)), 5),
+  RAND(CHECKSUM(NEWID())) * 10000,
+  GETDATE(),
+  DATEADD(DAY, RAND(CHECKSUM(NEWID())) * 365, GETDATE()),
+  '123456789' + RIGHT('0000' + CONVERT(VARCHAR(5), ROW_NUMBER() OVER (ORDER BY @@SPID)), 5),
+  RAND(CHECKSUM(NEWID())) * 10000
+FROM master..spt_values;
+```
