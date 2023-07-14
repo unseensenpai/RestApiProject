@@ -26,7 +26,7 @@ namespace TestProject.Concrete.Employee
             try
             {
                 _logger.LogInformation("Getting employee's from @Context", _context);
-                var dto = await _context.Employee.ToListAsync();
+                var dto = await _context.Employee.Take(100).ToListAsync();
                 var result = _mapper.Map<List<EmployeeResponseDto>>(dto);
                 return new BaseDataResponse<IEnumerable<EmployeeResponseDto>>() { Data = result, IsSuccess = true, Message = "Success" };
             }

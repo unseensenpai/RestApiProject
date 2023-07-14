@@ -1,24 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Text.Json;
 using TestProject.Dto.Core;
 
 namespace TestProject.Core.Middlewares
 {
-    public class ExceptionMiddleware : IMiddleware
+    public sealed class MyCustomExceptionMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _next;
-
-        public ExceptionMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (Exception ex)
             {
@@ -30,7 +24,7 @@ namespace TestProject.Core.Middlewares
                     KeyNotFoundException => StatusCodes.Status404NotFound,
                     _ => StatusCodes.Status500InternalServerError
                 };
-                var result = JsonSerializer.Serialize<ExceptionModel>(new() { IsSuccess = false, Message = $"An error occured. ERROR: {ex.Message}, METHOD: {new StackTrace(ex).GetFrame(0).GetMethod().Name}" });
+                var result = JsonSerializer.Serialize<ExceptionModel>(new() { IsSuccess = false, Message = $"An error occured. ERROR: {ex.Message} - METHOD: {new StackTrace(ex)?.GetFrame(0)?.GetMethod()?.Name}" });
                 await response.WriteAsync(result);
             }
         }
