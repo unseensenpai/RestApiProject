@@ -12,14 +12,12 @@ namespace TestProject.Concrete.Auth
         private readonly MySqlContext _context;
         private readonly ServiceConfigs _serviceConfigs;
         private readonly TokenValidationParameters _tokenValidationParameters;
-        private readonly IAuthService _authService;
 
-        public AuthService(MySqlContext context, IOptions<ServiceConfigs> serviceConfigs, TokenValidationParameters tokenValidationParameters, IAuthService authService)
+        public AuthService(MySqlContext context, IOptions<ServiceConfigs> serviceConfigs, TokenValidationParameters tokenValidationParameters)
         {
             _context = context;
             _serviceConfigs = serviceConfigs.Value;
             _tokenValidationParameters = tokenValidationParameters;
-            _authService = authService;
         }
 
         public Task<BaseDataResponse<TokenModel>> Login(LoginModel loginModel)

@@ -1,13 +1,16 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
+using System.Reflection;
+using TestProject.BL.Employee;
 using TestProject.Core.Middlewares;
 using TestProject.DAL;
 using TestProject.Dto.Auth;
 using TestProject.HttpApi.Core;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-RegisterConfiguations(builder);
+RegisterConfigurations(builder);
 RegisterServices(builder);
 WebApplication app = builder.Build();
 ConfigurePipelineSettings(app);
@@ -16,6 +19,9 @@ app.Logger.LogInformation("Application started!");
 
 static void RegisterInjectionServices(WebApplicationBuilder builder)
 {
+    builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    //builder.Services.AddSingleton<RequestDelegate>();
+    //builder.Services.AddScoped<ExceptionMiddleware>();
     builder.Services.AddServiceModules();
     builder.Services.AddHttpClient(builder.Configuration.GetSection("Endpoints:Local:Client").Value, options =>
     {
@@ -25,6 +31,8 @@ static void RegisterInjectionServices(WebApplicationBuilder builder)
         options.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", builder.Configuration.GetSection("").Value);
         options.Timeout = TimeSpan.FromSeconds(30);
     });
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies(), ServiceLifetime.Transient);
+    //builder.Services.AddAutoMapper(typeof(EmployeeProfile)); //AppDomain.CurrentDomain.GetAssemblies().Where(x=> x.GetType().IsAssignableFrom(typeof(Profile))).ToArray());
 }
 
 
@@ -72,13 +80,13 @@ static void ConfigurePipelineSettings(WebApplication app)
 
     app.UseAuthorization();
 
-    app.UseMiddleware<ExceptionMiddleware>();
+    //app.UseMiddleware<ExceptionMiddleware>();
 
     app.MapControllers();
 
 }
 
-static void RegisterConfiguations(WebApplicationBuilder builder)
+static void RegisterConfigurations(WebApplicationBuilder builder)
 {
     builder.Configuration.AddJsonFile("appsettings.json", true, true);
     builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);

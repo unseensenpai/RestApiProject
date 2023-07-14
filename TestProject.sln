@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.Constants", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.DAL", "TestProject.DAL\TestProject.DAL.csproj", "{DE162743-7B62-42D0-BF5C-0A50AB618082}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.Core", "TestProject.Core\TestProject.Core.csproj", "{70EA66E3-6984-4CBD-BF65-23FDE0AE023F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.Core", "TestProject.Core\TestProject.Core.csproj", "{70EA66E3-6984-4CBD-BF65-23FDE0AE023F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
