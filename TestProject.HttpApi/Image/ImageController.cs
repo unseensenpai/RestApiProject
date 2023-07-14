@@ -12,6 +12,11 @@ namespace TestProject.HttpApi.Image
             _imageService = imageService;
         }
 
+        /// <summary>
+        /// Get Image With ID: 1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetImageWithId([FromQuery] string id)
         {

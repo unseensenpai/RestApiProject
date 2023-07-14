@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>docs.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +18,12 @@
     <ProjectReference Include="..\TestProject.Concrete\TestProject.BL.csproj" />
     <ProjectReference Include="..\TestProject.Core\TestProject.Core.csproj" />
     <ProjectReference Include="..\TestProject.HttpApi\TestProject.HttpApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="docs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

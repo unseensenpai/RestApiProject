@@ -15,8 +15,13 @@ namespace TestProject.HttpApi.Auth
             _authService = authService;
         }
 
+        /// <summary>
+        /// Login For Jwt Token
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost]
-        public Task<BaseDataResponse<TokenModel>> LoginAsync(LoginModel loginModel) 
+        public Task<BaseDataResponse<TokenModel>> LoginAsync(LoginModel loginModel)
             => _authService.LoginAsync(loginModel);
 
         [HttpGet]

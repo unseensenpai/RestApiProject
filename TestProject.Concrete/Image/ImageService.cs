@@ -12,12 +12,7 @@ namespace TestProject.Concrete.Image
         {
             _configuration = configuration;
         }
-
-        /// <summary>
-        /// Give id and get image.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        
         public IActionResult GetImageWithId(string id)
         {
             var base64 = _configuration.GetValue<string>($"Image:Base64:{id}") ?? string.Empty;
