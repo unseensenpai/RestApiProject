@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.21.0" />
@@ -14,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestProject.Constants\TestProject.Constants.csproj" />
     <ProjectReference Include="..\TestProject.Contracts\TestProject.Contracts.csproj" />
+    <ProjectReference Include="..\TestProject.Core\TestProject.Core.csproj" />
     <ProjectReference Include="..\TestProject.DAL\TestProject.DAL.csproj" />
   </ItemGroup>
 

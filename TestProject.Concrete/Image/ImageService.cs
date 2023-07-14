@@ -7,12 +7,10 @@ namespace TestProject.Concrete.Image
     public class ImageService : IImageService
     {
         private readonly IConfiguration _configuration;
-        private readonly IImageService _imageService;
 
-        public ImageService(IConfiguration configuration, IImageService imageService)
+        public ImageService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _imageService = imageService;
         }
 
         public IActionResult GetImageWithId(string id)

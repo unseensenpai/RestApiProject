@@ -5,7 +5,7 @@ using TestProject.Dto.Core;
 
 namespace TestProject.Core.Middlewares
 {
-    public abstract class ExceptionMiddleware : IMiddleware
+    public class ExceptionMiddleware : IMiddleware
     {
         private readonly RequestDelegate _next;
 
