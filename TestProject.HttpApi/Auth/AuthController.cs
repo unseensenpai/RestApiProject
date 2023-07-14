@@ -16,7 +16,12 @@ namespace TestProject.HttpApi.Auth
         }
 
         [HttpPost]
-        public Task<BaseDataResponse<TokenModel>> Login(LoginModel loginModel) => _authService.Login(loginModel);
+        public Task<BaseDataResponse<TokenModel>> LoginAsync(LoginModel loginModel) 
+            => _authService.LoginAsync(loginModel);
+
+        [HttpGet]
+        public BaseDataResponse<ServiceConfigs> GetServiceConfigs() 
+            => _authService.GetServiceConfigs();
 
     }
 }

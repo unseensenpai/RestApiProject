@@ -20,7 +20,7 @@ namespace TestProject.Concrete.Auth
             _tokenValidationParameters = tokenValidationParameters;
         }
 
-        public Task<BaseDataResponse<TokenModel>> Login(LoginModel loginModel)
+        public Task<BaseDataResponse<TokenModel>> LoginAsync(LoginModel loginModel)
         {
             BaseDataResponse<TokenModel> response = new();
             try
@@ -31,6 +31,11 @@ namespace TestProject.Concrete.Auth
             {
                 throw;
             }
+        }
+
+        public BaseDataResponse<ServiceConfigs> GetServiceConfigs()
+        {
+            return new() { Data = _serviceConfigs, IsSuccess = true, Message = "Success" };
         }
     }
 }

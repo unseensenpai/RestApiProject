@@ -28,7 +28,10 @@ static void RegisterServices(WebApplicationBuilder builder)
 {    
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(config =>
+    {
+        config.IncludeXmlComments($"{AppContext.BaseDirectory}docs.xml");
+    });
     builder.Services.AddDbContext<MySqlContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("MssqlTest"));
@@ -73,7 +76,13 @@ static void ConfigurePipelineSettings(WebApplication app)
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(configs =>
+        {
+            configs.DocumentTitle = $"Test Api - {Assembly.GetExecutingAssembly().GetName().Version} - {app.Environment.EnvironmentName}";
+            configs.RoutePrefix = "";
+            configs.SwaggerEndpoint("/swagger/v1/swagger.json", "Test Api v1");
+            
+        });
     }
 
     app.MapControllerRoute(
