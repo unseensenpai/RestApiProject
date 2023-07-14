@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -28,7 +29,16 @@ static void RegisterServices(WebApplicationBuilder builder)
 {    
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(config =>
+    {
+        config.SwaggerDoc("v1", new OpenApiInfo()
+        {
+            Title = $"Test Api - {Assembly.GetExecutingAssembly().GetName().Version} - {builder.Environment.EnvironmentName}",
+            Version = "v1",
+            Description = "Test API projesidir."
+        });
+        config.IncludeXmlComments($"{AppContext.BaseDirectory}docs.xml");
+    });
     builder.Services.AddDbContext<MySqlContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("MssqlTest"));
@@ -73,7 +83,12 @@ static void ConfigurePipelineSettings(WebApplication app)
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(configs =>
+        {
+            configs.DocumentTitle = "Test API v1";
+            configs.SwaggerEndpoint("/swagger/v1/swagger.json", "Test Api v1");
+            
+        });
     }
 
     app.MapControllerRoute(

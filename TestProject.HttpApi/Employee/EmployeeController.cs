@@ -18,8 +18,12 @@ namespace TestProject.HttpApi.Employee
             _employeeService = employeeService;
         }
 
+        /// <summary>
+        /// Get Top 100 Employee
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeesAsync() 
+        public Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeesAsync()
             => _employeeService.GetEmployeesAsync();
     }
 }

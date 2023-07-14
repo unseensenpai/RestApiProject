@@ -12,7 +12,7 @@ namespace TestProject.Concrete.Image
         {
             _configuration = configuration;
         }
-
+        
         public IActionResult GetImageWithId(string id)
         {
             var base64 = _configuration.GetValue<string>($"Image:Base64:{id}") ?? string.Empty;
@@ -21,7 +21,7 @@ namespace TestProject.Concrete.Image
             using var ms = new MemoryStream(bytes, 0, bytes.Length);
             System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
             ArgumentNullException.ThrowIfNull(image, nameof(image));
-            return new ContentResult() { Content = base64, ContentType = "image/jpeg", StatusCode = 200 };
+            return new ContentResult() { Content = base64, ContentType = "application/json", StatusCode = 200 };
         }
     }
 }
