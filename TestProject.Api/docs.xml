@@ -11,6 +11,12 @@
             <param name="loginModel"></param>
             <returns></returns>
         </member>
+        <member name="M:TestProject.HttpApi.Auth.AuthController.GetServiceConfigs">
+            <summary>
+            Service Configs EP
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TestProject.HttpApi.Employee.EmployeeController.GetEmployeesAsync">
             <summary>
             Get Top 100 Employee

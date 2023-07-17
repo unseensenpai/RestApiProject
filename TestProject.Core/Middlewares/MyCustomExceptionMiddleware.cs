@@ -8,6 +8,11 @@ namespace TestProject.Core.Middlewares
 {
     public sealed class MyCustomExceptionMiddleware : IMiddleware
     {
+        readonly ILogger<MyCustomExceptionMiddleware> _logger;
+        public MyCustomExceptionMiddleware(ILogger<MyCustomExceptionMiddleware> logger)
+        {
+            _logger = logger;
+        }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
@@ -16,6 +21,7 @@ namespace TestProject.Core.Middlewares
             }
             catch (Exception ex)
             {
+                _logger.LogError("An error occured on Request/Response -> {exStackTrace}", ex.StackTrace);
                 var response = context.Response;
                 response.ContentType = "application/json";
                 response.StatusCode = ex switch
@@ -24,7 +30,8 @@ namespace TestProject.Core.Middlewares
                     KeyNotFoundException => StatusCodes.Status404NotFound,
                     _ => StatusCodes.Status500InternalServerError
                 };
-                var result = JsonSerializer.Serialize<ExceptionModel>(new() { IsSuccess = false, Message = $"An error occured. ERROR: {ex.Message} - METHOD: {new StackTrace(ex)?.GetFrame(0)?.GetMethod()?.Name}" });
+                var stackTrace = new StackTrace(ex);
+                var result = JsonSerializer.Serialize<ExceptionModel>(new() { IsSuccess = false, Message = $"An error occured. ERROR: {ex.Message} - METHOD: {stackTrace.GetFrame(0)?.GetMethod()?.ReflectedType?.Name}.{stackTrace.GetFrame(0)?.GetMethod()?.Name}()" });
                 await response.WriteAsync(result);
             }
         }

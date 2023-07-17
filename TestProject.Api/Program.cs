@@ -1,10 +1,9 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Reflection;
-using TestProject.BL.Employee;
 using TestProject.Core.Middlewares;
 using TestProject.DAL;
 using TestProject.Dto.Auth;
@@ -15,8 +14,9 @@ RegisterConfigurations(builder);
 RegisterServices(builder);
 WebApplication app = builder.Build();
 ConfigurePipelineSettings(app);
+AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+app.Logger.LogInformation("--------- Test API Web Application Started! Version: {assembly} ---------", AppDomain.CurrentDomain.GetType().Assembly.GetName().Version);
 app.Run();
-app.Logger.LogInformation("Application started!");
 
 
 static void RegisterConfigurations(WebApplicationBuilder builder)
@@ -26,7 +26,14 @@ static void RegisterConfigurations(WebApplicationBuilder builder)
     builder.Services.Configure<ServiceConfigs>(builder.Configuration.GetSection("ServiceConfiguration"));
 }
 static void RegisterServices(WebApplicationBuilder builder)
-{    
+{
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.Limits.MaxRequestBodySize = int.MaxValue;
+        options.Limits.MaxRequestBufferSize = int.MaxValue;
+    });
+    builder.WebHost.UseKestrelCore();
+    builder.WebHost.UseKestrelHttpsConfiguration();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(config =>
@@ -67,7 +74,7 @@ static void RegisterInjectionServices(WebApplicationBuilder builder)
     //builder.Services.AddSingleton<RequestDelegate>();
     //builder.Services.AddScoped<ExceptionMiddleware>();
     builder.Services.AddServiceModules();
-    builder.Services.AddHttpClient(builder.Configuration.GetSection("Endpoints:Local:Client").Value, options =>
+    builder.Services.AddHttpClient(builder.Configuration.GetValue<string>("Endpoints:Local:Client"), options =>
     {
         options.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Endpoints:Local:Address"));
         options.DefaultRequestHeaders.Accept.Clear();
@@ -102,9 +109,9 @@ static void ConfigurePipelineSettings(WebApplication app)
 
     app.UseMiddleware<MyCustomExceptionMiddleware>();
 }
-
-AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 {
-    app.Logger.LogCritical("an error occured.");
+    var ex = (Exception)e.ExceptionObject;
+    var stackTrace = new StackTrace(ex).GetFrame(0)?.GetMethod();
+    app.Logger.LogCritical("An error occured. ERROR: {exMessage} - METHOD: {exThrowedClassName}.{methodName}()", ex.Message, stackTrace?.ReflectedType?.Name, stackTrace?.Name);
 }

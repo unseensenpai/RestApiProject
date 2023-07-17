@@ -25,9 +25,12 @@ namespace TestProject.Concrete.Employee
         {
             try
             {
-                _logger.LogInformation("Getting employee's from @Context", _context);
+                _logger.LogInformation("Getting employee's from {context}", _context);
                 var dto = await _context.Employee.Take(100).ToListAsync();
                 var result = _mapper.Map<List<EmployeeResponseDto>>(dto);
+
+                _logger.LogInformation("Employees: {identities} - {name}", result.Select(x=>x.IdentityNo), result.Select(x => x.Name));
+
                 return new BaseDataResponse<IEnumerable<EmployeeResponseDto>>() { Data = result, IsSuccess = true, Message = "Success" };
             }
             catch (Exception ex)
