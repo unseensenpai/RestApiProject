@@ -11,6 +11,7 @@ using TestProject.HttpApi.Core;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 RegisterConfigurations(builder);
+RegisterHostDefaults(builder);
 RegisterServices(builder);
 WebApplication app = builder.Build();
 ConfigurePipelineSettings(app);
@@ -18,23 +19,44 @@ AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler
 app.Logger.LogInformation("--------- Test API Web Application Started! Version: {assembly} ---------", AppDomain.CurrentDomain.GetType().Assembly.GetName().Version);
 app.Run();
 
-
 static void RegisterConfigurations(WebApplicationBuilder builder)
 {
     builder.Configuration.AddJsonFile("appsettings.json", true, true);
     builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true);
     builder.Services.Configure<ServiceConfigs>(builder.Configuration.GetSection("ServiceConfiguration"));
 }
-static void RegisterServices(WebApplicationBuilder builder)
+static void RegisterHostDefaults(WebApplicationBuilder builder)
 {
     builder.WebHost.ConfigureKestrel(options =>
     {
-        options.Limits.MaxRequestBodySize = int.MaxValue;
-        options.Limits.MaxRequestBufferSize = int.MaxValue;
+        options.Limits.MaxRequestBodySize = 60000000;
+        options.Limits.MaxRequestBufferSize = 60000000;
+        options.Limits.MaxResponseBufferSize = 60000000;
+        options.Limits.MaxRequestHeadersTotalSize = 60000000;
+        options.Limits.MaxRequestLineSize = 60000000;
+        options.Limits.KeepAliveTimeout = TimeSpan.FromTicks(35);
+        options.Limits.MaxConcurrentConnections = 4;
+        options.Limits.MaxConcurrentUpgradedConnections = 4;
+        options.Limits.RequestHeadersTimeout = TimeSpan.FromTicks(35);
     });
-    builder.WebHost.UseKestrelCore();
-    builder.WebHost.UseKestrelHttpsConfiguration();
+    //builder.WebHost.UseKestrelCore();
+    //builder.WebHost.UseKestrelHttpsConfiguration();
 
+}
+
+static void RegisterServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddCors(corsOptions =>
+    {
+        corsOptions.AddPolicy(name: "MyTestPolicy",
+            policy =>
+            {
+                policy.WithOrigins("*")
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+    });
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(config =>
     {
@@ -69,6 +91,7 @@ static void RegisterServices(WebApplicationBuilder builder)
 }
 static void RegisterInjectionServices(WebApplicationBuilder builder)
 {
+    
     builder.Services.AddScoped<MyCustomExceptionMiddleware>();
     builder.Services.AddHttpContextAccessor();
     //builder.Services.AddSingleton<RequestDelegate>();
@@ -104,6 +127,9 @@ static void ConfigurePipelineSettings(WebApplication app)
 
     app.UseHttpsRedirection();
     app.UseRouting();
+
+    app.UseCors();
+
     app.UseAuthorization();    
     app.MapControllers();
 

@@ -17,10 +17,27 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:TestProject.HttpApi.Employee.EmployeeController.GetEmployeesAsync">
+        <member name="M:TestProject.HttpApi.Employee.EmployeeController.GetEmployeesAsync(System.Int32)">
             <summary>
-            Get Top 100 Employee
+            Get "count" of Employees from database.
             </summary>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TestProject.HttpApi.Employee.EmployeeController.AddEmployeesAsync(System.Collections.Generic.IEnumerable{TestProject.Dto.Employee.EmployeeRequestDto})">
+            <summary>
+            Save employees to database if not exist.
+            </summary>
+            <param name="employees"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TestProject.HttpApi.Employee.EmployeeController.GenerateEmployees(System.Int32,System.Boolean)">
+            <summary>
+            Generate random employees
+            if isSavedToDatabase is true records will saved to database.
+            </summary>
+            <param name="employeeNumberToGenerate"></param>
+            <param name="isSavedToDatabase"></param>
             <returns></returns>
         </member>
         <member name="M:TestProject.HttpApi.Image.ImageController.GetImageWithId(System.String)">

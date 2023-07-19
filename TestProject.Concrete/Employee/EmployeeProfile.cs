@@ -9,6 +9,7 @@ namespace TestProject.BL.Employee
         public EmployeeProfile()
         {
             CreateMap<EmployeeModel, EmployeeResponseDto>().ReverseMap();
+            CreateMap<EmployeeModel, EmployeeRequestDto>().ReverseMap();
         }
     }
 }
