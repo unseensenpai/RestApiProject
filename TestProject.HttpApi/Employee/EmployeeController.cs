@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 using TestProject.Contracts.Employee;
 using TestProject.Dto.Core;
 using TestProject.Dto.Employee;
@@ -18,12 +19,34 @@ namespace TestProject.HttpApi.Employee
             _employeeService = employeeService;
         }
 
+
         /// <summary>
-        /// Get Top 100 Employee
+        /// Get "count" of Employees from database.
         /// </summary>
+        /// <param name="count"></param>
         /// <returns></returns>
         [HttpGet]
-        public Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeesAsync()
-            => _employeeService.GetEmployeesAsync();
+        public async Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeesAsync([Required, FromQuery] int count)
+            => await _employeeService.GetEmployeesAsync(count);
+
+        /// <summary>
+        /// Save employees to database if not exist.
+        /// </summary>
+        /// <param name="employees"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<bool> AddEmployeesAsync([FromBody, Required] IEnumerable<EmployeeRequestDto> employees)
+            => await _employeeService.AddEmployeesAsync(employees);
+
+        /// <summary>
+        /// Generate random employees
+        /// if isSavedToDatabase is true records will saved to database.
+        /// </summary>
+        /// <param name="employeeNumberToGenerate"></param>
+        /// <param name="isSavedToDatabase"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IEnumerable<EmployeeResponseDto>> GenerateEmployees([Required, FromQuery] int employeeNumberToGenerate, [FromQuery] bool isSavedToDatabase = false)
+            => await _employeeService.GenerateEmployees(employeeNumberToGenerate, isSavedToDatabase);
     }
 }
