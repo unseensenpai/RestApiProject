@@ -1,4 +1,5 @@
-﻿using TestProject.Concrete.Configuration;
+﻿using TestProject.BL.Configuration;
+using TestProject.Concrete.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -8,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services
                 .AddAuthModule()
                 .AddEmployeeModule()
-                .AddImageModule();
+                .AddImageModule()
+                .AddCoreModule();
     }
 }

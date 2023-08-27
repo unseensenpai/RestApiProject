@@ -17,6 +17,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:TestProject.HttpApi.Core.BenchmarkRunController.RunBenchmark">
+            <summary>
+            Trigger BL specified benchmarks.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TestProject.HttpApi.Employee.EmployeeController.GetEmployeesAsync(System.Int32)">
             <summary>
             Get "count" of Employees from database.

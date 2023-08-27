@@ -34,7 +34,7 @@ static void RegisterHostDefaults(WebApplicationBuilder builder)
         options.Limits.MaxResponseBufferSize = 60000000;
         options.Limits.MaxRequestHeadersTotalSize = 60000000;
         options.Limits.MaxRequestLineSize = 60000000;
-        options.Limits.KeepAliveTimeout = TimeSpan.FromTicks(35);
+        options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes (35);
         options.Limits.MaxConcurrentConnections = 4;
         options.Limits.MaxConcurrentUpgradedConnections = 4;
         options.Limits.RequestHeadersTimeout = TimeSpan.FromTicks(35);
@@ -86,6 +86,7 @@ static void RegisterServices(WebApplicationBuilder builder)
         {
             options.SerializerSettings.ContractResolver = new DefaultContractResolver();
         });
+    builder.Services.AddResponseCaching();
 
     RegisterInjectionServices(builder);
 }
@@ -129,6 +130,8 @@ static void ConfigurePipelineSettings(WebApplication app)
     app.UseRouting();
 
     app.UseCors();
+
+    app.UseResponseCaching();
 
     app.UseAuthorization();    
     app.MapControllers();
