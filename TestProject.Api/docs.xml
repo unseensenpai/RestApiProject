@@ -46,6 +46,15 @@
             <param name="isSavedToDatabase"></param>
             <returns></returns>
         </member>
+        <member name="M:TestProject.HttpApi.Employee.EmployeeController.GetEmployeeSalariesByDate(System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+            Get employee information by job start and end date with count filter.
+            </summary>
+            <param name="count">How many records you need?</param>
+            <param name="startDate">Job start date.</param>
+            <param name="endDate">Job end date.</param>
+            <returns></returns>
+        </member>
         <member name="M:TestProject.HttpApi.Image.ImageController.GetImageWithId(System.String)">
             <summary>
             Get Image With ID: 1

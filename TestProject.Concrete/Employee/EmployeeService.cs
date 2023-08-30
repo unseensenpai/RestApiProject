@@ -8,6 +8,7 @@ using TestProject.DAL;
 using TestProject.DAL.Models;
 using TestProject.Dto.Core;
 using TestProject.Dto.Employee;
+using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
 
 namespace TestProject.Concrete.Employee
 {
@@ -91,6 +92,31 @@ namespace TestProject.Concrete.Employee
             }
             
             return employeeModels;
+        }
+
+        public async Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeeSalariesByDate(int count, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _logger.LogInformation("Getting employee salaries from {context}", _context);
+                var dto = await _context.Employee
+                    .Where(x =>
+                        x.StartDate >= startDate.Date &&
+                        x.EndDate < endDate.AddDays(1).Date)
+                    .Take(count)
+                    .ToListAsync();
+
+                var result = _mapper.Map<List<EmployeeResponseDto>>(dto);
+
+                _logger.LogInformation("Employees: {identities} - {name}", result.Select(x => x.IdentityNo), result.Select(x => x.Name));
+
+                return new BaseDataResponse<IEnumerable<EmployeeResponseDto>>() { Data = result, IsSuccess = true, Message = "Success" };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occured while getting {count} employees information - ERROR: {ex}", count, ex.Message);
+                return new BaseDataResponse<IEnumerable<EmployeeResponseDto>> { IsSuccess = false, Message = ex.Message };
+            }
         }
     }
 }

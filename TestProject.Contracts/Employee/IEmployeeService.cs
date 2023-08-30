@@ -8,5 +8,6 @@ namespace TestProject.Contracts.Employee
         public Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeesAsync(int count);
         public Task<bool> AddEmployeesAsync(IEnumerable<EmployeeRequestDto> employees);
         public Task<IEnumerable<EmployeeResponseDto>> GenerateEmployees(int employeeNumberToGenerate, bool isSavedToDatabase);
+        public Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeeSalariesByDate(int count, DateTime startDate, DateTime endDate);
     }
 }

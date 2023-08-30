@@ -48,5 +48,16 @@ namespace TestProject.HttpApi.Employee
         [HttpPost]
         public async Task<IEnumerable<EmployeeResponseDto>> GenerateEmployees([Required, FromQuery] int employeeNumberToGenerate, [FromQuery] bool isSavedToDatabase = false)
             => await _employeeService.GenerateEmployees(employeeNumberToGenerate, isSavedToDatabase);
+
+        /// <summary>
+        /// Get employee information by job start and end date with count filter.
+        /// </summary>
+        /// <param name="count">How many records you need?</param>
+        /// <param name="startDate">Job start date.</param>
+        /// <param name="endDate">Job end date.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<BaseDataResponse<IEnumerable<EmployeeResponseDto>>> GetEmployeeSalariesByDate([Required, FromQuery] int count, [Required, FromQuery] DateTime startDate, [Required, FromQuery] DateTime endDate)
+            => await _employeeService.GetEmployeeSalariesByDate(count, startDate, endDate);
     }
 }
