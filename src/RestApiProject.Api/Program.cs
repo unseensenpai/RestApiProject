@@ -66,9 +66,9 @@ static void RegisterServices(WebApplicationBuilder builder)
     {
         config.SwaggerDoc("v1", new OpenApiInfo()
         {
-            Title = $"Test Api - {Assembly.GetExecutingAssembly().GetName().Version} - {builder.Configuration.GetValue<string>("EnvironmentValue")}",
+            Title = $"Unseen Rest Api - {Assembly.GetExecutingAssembly().GetName().Version} - {builder.Configuration.GetValue<string>("EnvironmentValue")}",
             Version = "v1",
-            Description = "Test API projesidir."
+            Description = "Testlerimi gerçekleþtirdiðim rest API projesidir."
         });
         config.IncludeXmlComments($"{AppContext.BaseDirectory}docs.xml");
     });
@@ -128,8 +128,8 @@ static void ConfigurePipelineSettings(WebApplication app)
     app.UseSwagger();
     app.UseSwaggerUI(configs =>
     {
-        configs.DocumentTitle = "Rest API v1";
-        configs.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest Api v1");
+        configs.DocumentTitle = "Unseen API v1";
+        configs.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 
     });
 
