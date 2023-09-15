@@ -1,7 +1,10 @@
-name: Docker Image CI for GHCR
+name: Production GHCR
 
 on:
-  push
+  push:
+  tags:
+    - '*'
+    branches: [ "master" ]
 
 jobs:
   build_and_push:
