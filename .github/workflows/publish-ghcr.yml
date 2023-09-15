@@ -12,5 +12,5 @@ jobs:
     - name : login build and push
       run: >
         docker login --username unseensenpai --password ${{ secrets.GH_PAT }} ghcr.io
-        docker build . --tag ghcr.io/unseensenpai/restapiproject-ghcr:$(date +%s)
-        docker push ghcr.io/unseensenpai/restapiproject-ghcr:$(date +%s)
+        docker build . --tag ghcr.io/unseensenpai/restapiproject-ghcr:latest
+        docker push ghcr.io/unseensenpai/restapiproject-ghcr:latest
