@@ -1,9 +1,7 @@
-name: Production GHCR
+name: Production
 
 on:
   push:
-  tags:
-    - '*'
     branches: [ "master" ]
 
 jobs:
