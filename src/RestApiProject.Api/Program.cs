@@ -121,18 +121,33 @@ static void ConfigurePipelineSettings(WebApplication app)
 {
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI(configs =>
-        {
-            configs.DocumentTitle = "Test API v1";
-            configs.SwaggerEndpoint("/swagger/v1/swagger.json", "Test Api v1");
-
-        });
+        app.UseDeveloperExceptionPage();
+       
     }
+
+    app.UseSwagger();
+    app.UseSwaggerUI(configs =>
+    {
+        configs.DocumentTitle = "Rest API v1";
+        configs.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest Api v1");
+
+    });
 
     app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    app.Use(async (context, next) => {
+        if (context.Request.Path == "/" || context.Request.Path == "/swagger")
+        {
+            context.Response.StatusCode = 302;
+            context.Response.Headers["Location"] = "/swagger/index.html";
+        }
+        else
+        {
+            await next();
+        }
+    });
 
     app.UseHttpsRedirection();
     app.UseRouting();
