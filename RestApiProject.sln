@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.WebHost", "RestApiProject.Api\RestApiProject.WebHost.csproj", "{62F400BC-3C73-4151-A4EF-39080BE80CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.WebHost", "src\RestApiProject.Api\RestApiProject.WebHost.csproj", "{62F400BC-3C73-4151-A4EF-39080BE80CC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.HttpApi", "RestApiProject.HttpApi\RestApiProject.HttpApi.csproj", "{D8ED35C2-5E24-4387-A693-DB9345CC37BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.HttpApi", "src\RestApiProject.HttpApi\RestApiProject.HttpApi.csproj", "{D8ED35C2-5E24-4387-A693-DB9345CC37BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Dto", "RestApiProject.Dto\RestApiProject.Dto.csproj", "{C27D7930-4EE5-4074-96D8-89FDCE4BDC82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Dto", "src\RestApiProject.Dto\RestApiProject.Dto.csproj", "{C27D7930-4EE5-4074-96D8-89FDCE4BDC82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.BL", "RestApiProject.Concrete\RestApiProject.BL.csproj", "{9B179A0D-9821-4D6C-8FF0-E50D59392577}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.BL", "src\RestApiProject.Concrete\RestApiProject.BL.csproj", "{9B179A0D-9821-4D6C-8FF0-E50D59392577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Contracts", "RestApiProject.Contracts\RestApiProject.Contracts.csproj", "{2D17314A-DCD8-4D4B-AFFB-BA92D8AC539B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Contracts", "src\RestApiProject.Contracts\RestApiProject.Contracts.csproj", "{2D17314A-DCD8-4D4B-AFFB-BA92D8AC539B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Constants", "RestApiProject.Constants\RestApiProject.Constants.csproj", "{0CED8ED3-DF5B-42AD-8110-39B760D7B154}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Constants", "src\RestApiProject.Constants\RestApiProject.Constants.csproj", "{0CED8ED3-DF5B-42AD-8110-39B760D7B154}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.DAL", "RestApiProject.DAL\RestApiProject.DAL.csproj", "{DE162743-7B62-42D0-BF5C-0A50AB618082}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.DAL", "src\RestApiProject.DAL\RestApiProject.DAL.csproj", "{DE162743-7B62-42D0-BF5C-0A50AB618082}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Core", "RestApiProject.Core\RestApiProject.Core.csproj", "{70EA66E3-6984-4CBD-BF65-23FDE0AE023F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiProject.Core", "src\RestApiProject.Core\RestApiProject.Core.csproj", "{70EA66E3-6984-4CBD-BF65-23FDE0AE023F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
