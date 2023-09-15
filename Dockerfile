@@ -8,16 +8,16 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["RestApiProject.Api/RestApiProject.WebHost.csproj", "RestApiProject.Api/"]
-COPY ["RestApiProject.Concrete/RestApiProject.BL.csproj", "RestApiProject.Concrete/"]
-COPY ["RestApiProject.Contracts/RestApiProject.Contracts.csproj", "RestApiProject.Contracts/"]
-COPY ["RestApiProject.Dto/RestApiProject.Dto.csproj", "RestApiProject.Dto/"]
-COPY ["RestApiProject.Core/RestApiProject.Core.csproj", "RestApiProject.Core/"]
-COPY ["RestApiProject.DAL/RestApiProject.DAL.csproj", "RestApiProject.DAL/"]
-COPY ["RestApiProject.HttpApi/RestApiProject.HttpApi.csproj", "RestApiProject.HttpApi/"]
-RUN dotnet restore "RestApiProject.Api/RestApiProject.WebHost.csproj"
+COPY ["src/RestApiProject.Api/RestApiProject.WebHost.csproj", "src/RestApiProject.Api/"]
+COPY ["src/RestApiProject.Concrete/RestApiProject.BL.csproj", "src/RestApiProject.Concrete/"]
+COPY ["src/RestApiProject.Contracts/RestApiProject.Contracts.csproj", "src/RestApiProject.Contracts/"]
+COPY ["src/RestApiProject.Dto/RestApiProject.Dto.csproj", "src/RestApiProject.Dto/"]
+COPY ["src/RestApiProject.Core/RestApiProject.Core.csproj", "src/RestApiProject.Core/"]
+COPY ["src/RestApiProject.DAL/RestApiProject.DAL.csproj", "src/RestApiProject.DAL/"]
+COPY ["src/RestApiProject.HttpApi/RestApiProject.HttpApi.csproj", "src/RestApiProject.HttpApi/"]
+RUN dotnet restore "src/RestApiProject.Api/RestApiProject.WebHost.csproj"
 COPY . .
-WORKDIR "/src/RestApiProject.Api"
+WORKDIR "/src/src/RestApiProject.Api"
 RUN dotnet build "RestApiProject.WebHost.csproj" -c Release -o /app/build
 
 FROM build AS publish
