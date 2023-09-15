@@ -4,15 +4,13 @@ on:
   push
 
 jobs:
-
   build_and_push:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Build and push the image
       run: |
-      docker login --username unseensenpai --password ${{secrets.GH_PAT}} ghcr.io
-      docker build .  --file Dockerfile --tag ghcr.io/unseensenpai/restapiproject-ghcr:$(date +%s)
+      docker login --username unseensenpai --password ${{ secrets.GH_PAT }} ghcr.io
+      docker build . --tag ghcr.io/unseensenpai/restapiproject-ghcr:$(date +%s)
       docker push ghcr.io/unseensenpai/restapiproject-ghcr:$(date +%s)
