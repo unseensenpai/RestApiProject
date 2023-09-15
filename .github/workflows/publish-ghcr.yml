@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name : login build and push
-      run: >
-        docker login --username unseensenpai --password ${{ secrets.GH_PAT }} ghcr.io
-        docker build . --tag ghcr.io/unseensenpai/restapiproject-ghcr:latest --file .\Dockerfile
+      run: |
+        docker login --username unseensenpai --password ${{ secrets.GH_PAT }} ghcr.io \
+        docker build . --tag ghcr.io/unseensenpai/restapiproject-ghcr:latest --file .\Dockerfile \
         docker push ghcr.io/unseensenpai/restapiproject-ghcr:latest
