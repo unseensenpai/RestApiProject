@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unseen-svc
+  namespace: default
+  labels:
+    app: unseenservice
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: unseenservice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unseenservice-dep
+  namespace: default
+  labels:
+    app: unseenservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unseenservice
+  template:
+    metadata:
+      labels:
+        app: unseenservice
+    spec:
+      containers:
+        - name: unseenservice-1
+          image: ghcr.io/unseensenpai/restapiproject-ghcr:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config-volume
+              readOnly: true
+              mountPath: /app/config
+      imagePullSecrets:
+        - name: gitlab-registry
+      volumes:
+        - name: config-volume
+          configMap:
+            name: unseensettings
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unseenservice-ing
+  namespace: default
+  labels:
+    url: localhost
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    #cert-manager.io/cluster-issuer: 
+    #kubernetes.io/tls-acme: 
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 128k
+    nginx.ingress.kubernetes.io/proxy-buffering: 'on'
+    nginx.ingress.kubernetes.io/proxy-buffers-number: '4'
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: '1200'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '1200'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '1200'
+spec:
+  # tls:
+  #   - secretName: 
+  #     hosts:
+  #       - localhost
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: unseenservice-svc
+                port:
+                  number: 8080

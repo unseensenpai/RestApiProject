@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: restapi-pod
+spec:
+  containers:
+  - name: restapi-container
+    image: ghcr.io/unseensenpai/restapiproject-ghcr:latest
