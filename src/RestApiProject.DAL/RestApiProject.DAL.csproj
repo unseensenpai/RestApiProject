@@ -7,16 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="DataObjects\ORMDataModel1.xpo" />
-    <None Remove="DataObjects\ORMDataModel1.xpo.diagram" />
+    <PackageReference Include="DevExpress.Xpo" Version="23.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Npgsql" Version="7.0.6" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Xpo" Version="23.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Npgsql" Version="7.0.4" />
-    <PackageReference Include="Serilog" Version="3.0.1" />
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DataObjects\Employee\Employee.xpo.diagram">
+      <AutoGen>True</AutoGen>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataObjects\Employee\EmployeeCode\" />
   </ItemGroup>
 
 </Project>

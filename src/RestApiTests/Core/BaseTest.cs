@@ -3,12 +3,7 @@ using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
 using DevExpress.Xpo.Metadata;
 using RestApiProject.DAL.DataObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Loader;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestApiTests.Core
 {
@@ -17,6 +12,7 @@ namespace RestApiTests.Core
         protected IMapper Mapper { get; private set; }
         protected UnitOfWork UnitOfWork { get; private set; }
         protected IDataLayer MssqlDataLayer { get; private set; }
+        protected IDataLayer PostgreSqlDataLayer { get; private set; }
         public BaseTest()
         {
             InitializeAutomapper();
@@ -58,10 +54,25 @@ namespace RestApiTests.Core
 
 
 
-            MssqlDataLayer = new ThreadSafeDataLayer(dictionary, GetConnectionProvider("Data Source=localhost;Initial Catalog=TestDbForTestProject;Integrated Security=True;TrustServerCertificate=True"));
+            MssqlDataLayer = new ThreadSafeDataLayer(dictionary, GetConnectionProvider("Data Source=localhost;Initial Catalog=TestDbForTestProject;Integrated Security=True;TrustServerCertificate=True", dBType: DBType.Mssql, aco: AutoCreateOption.None));
+            PostgreSqlDataLayer = new ThreadSafeDataLayer(dictionary, GetConnectionProvider("Server=127.0.0.1;Port=5432;Database=testdbfortestproject;User Id=Unseen;Password=1337;", dBType: DBType.Mssql, aco: AutoCreateOption.None));
+
+
         }
 
-        private IDataStore GetConnectionProvider(string connectionString)
-            => MSSqlConnectionProvider.CreateProviderFromString(connectionString, AutoCreateOption.None, out _);
+        private static IDataStore GetConnectionProvider(string connectionString, DBType dBType, AutoCreateOption aco)
+            => dBType switch
+            {
+                DBType.Mssql => MSSqlConnectionProvider.CreateProviderFromString(connectionString, aco, out _),
+                DBType.Postgresql => PostgreSqlConnectionProvider.CreateProviderFromString(connectionString, aco, out _),
+                _ => throw new NotImplementedException()
+            };
+
+
+        public enum DBType
+        {
+            Mssql,
+            Postgresql
+        }
     }
 }

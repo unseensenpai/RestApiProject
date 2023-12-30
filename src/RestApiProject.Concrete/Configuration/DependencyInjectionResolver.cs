@@ -7,9 +7,11 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddServiceModules(this IServiceCollection services) =>
             services
+                .AddDatabaseLayers()
                 .AddAuthModule()
                 .AddEmployeeModule()
                 .AddImageModule()
+                .AddUserModule()
                 .AddCoreModule();
     }
 }

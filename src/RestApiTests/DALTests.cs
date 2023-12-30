@@ -1,10 +1,6 @@
 ﻿using DevExpress.Xpo;
+using RestApiProject.DAL.DataObjects.User;
 using RestApiTests.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestApiTests
 {
@@ -20,10 +16,12 @@ namespace RestApiTests
         }
 
         [Test]
-        public void DALTest()
+        public async Task DALTest()
         {
             Assert.IsNotNull(_dataLayer);
             using UnitOfWork uow = new(_dataLayer);
+            var result = await uow.Query<UserObject>().ToListAsync();
+            Assert.IsNotNull(result);
         }
     }
 }
